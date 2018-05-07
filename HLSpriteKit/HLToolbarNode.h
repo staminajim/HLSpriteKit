@@ -90,7 +90,7 @@ typedef NS_ENUM(NSInteger, HLToolbarNodeAnimation) {
 
 /// @name Managing Interaction
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 /**
  A callback invoked when a tool is tapped.
@@ -505,7 +505,7 @@ typedef NS_ENUM(NSInteger, HLToolbarNodeAnimation) {
 
 /// @name Handling User Interaction
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 /**
  Called when the user taps a tool.
@@ -529,7 +529,7 @@ typedef NS_ENUM(NSInteger, HLToolbarNodeAnimation) {
 
 @end
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 @protocol HLToolbarNodeMultiGestureTargetDelegate;
 

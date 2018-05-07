@@ -270,7 +270,7 @@ enum {
 
 - (NSArray *)addsToGestureRecognizers
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   return @[ [[UITapGestureRecognizer alloc] init] ];
 #else
   return @[ [[NSClickGestureRecognizer alloc] init] ];
@@ -280,7 +280,7 @@ enum {
 - (BOOL)addToGesture:(HLGestureRecognizer *)gestureRecognizer firstLocation:(CGPoint)sceneLocation isInside:(BOOL *)isInside
 {
   *isInside = YES;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
     // note: Require only one tap and one touch, same as our gesture recognizer returned
     // from addsToGestureRecognizers?  I think it's okay to be non-strict.
@@ -296,7 +296,7 @@ enum {
   return NO;
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 - (void)handleTap:(HLGestureRecognizer *)gestureRecognizer
 {
@@ -344,7 +344,7 @@ enum {
 
 #endif
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 #pragma mark -
 #pragma mark UIResponder

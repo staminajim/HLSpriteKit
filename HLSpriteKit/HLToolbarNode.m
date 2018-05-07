@@ -74,7 +74,7 @@ static const NSTimeInterval HLToolbarSlideDuration = 0.15f;
     _automaticWidth = [aDecoder decodeBoolForKey:@"automaticWidth"];
     _automaticHeight = [aDecoder decodeBoolForKey:@"automaticHeight"];
     _automaticToolsScaleLimit = [aDecoder decodeBoolForKey:@"automaticToolsScaleLimit"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _size = [aDecoder decodeCGSizeForKey:@"size"];
     _anchorPoint = [aDecoder decodeCGPointForKey:@"anchorPoint"];
 #else
@@ -109,7 +109,7 @@ static const NSTimeInterval HLToolbarSlideDuration = 0.15f;
   [aCoder encodeBool:_automaticWidth forKey:@"automaticWidth"];
   [aCoder encodeBool:_automaticHeight forKey:@"automaticHeight"];
   [aCoder encodeBool:_automaticToolsScaleLimit forKey:@"automaticToolsScaleLimit"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_size forKey:@"size"];
   [aCoder encodeCGPoint:_anchorPoint forKey:@"anchorPoint"];
 #else
@@ -497,7 +497,7 @@ static const NSTimeInterval HLToolbarSlideDuration = 0.15f;
 
 - (NSArray *)addsToGestureRecognizers
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   return @[ [[UITapGestureRecognizer alloc] init] ];
 #else
   return @[ [[NSClickGestureRecognizer alloc] init] ];
@@ -507,7 +507,7 @@ static const NSTimeInterval HLToolbarSlideDuration = 0.15f;
 - (BOOL)addToGesture:(HLGestureRecognizer *)gestureRecognizer firstLocation:(CGPoint)sceneLocation isInside:(BOOL *)isInside
 {
   *isInside = YES;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
     // note: Require only one tap and one touch, same as our gesture recognizer returned
     // from addsToGestureRecognizers?  I think it's okay to be non-strict.
@@ -523,7 +523,7 @@ static const NSTimeInterval HLToolbarSlideDuration = 0.15f;
   return NO;
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 - (void)handleTap:(HLGestureRecognizer *)gestureRecognizer
 {
@@ -571,7 +571,7 @@ static const NSTimeInterval HLToolbarSlideDuration = 0.15f;
 
 #endif
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 #pragma mark -
 #pragma mark UIResponder
@@ -797,7 +797,7 @@ static const NSTimeInterval HLToolbarSlideDuration = 0.15f;
 
 @end
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 @implementation HLToolbarNodeMultiGestureTarget
 

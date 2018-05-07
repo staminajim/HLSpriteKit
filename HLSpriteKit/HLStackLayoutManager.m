@@ -65,7 +65,7 @@ const CGFloat HLStackLayoutManagerEpsilon = 0.001f;
   if (self) {
     _stackDirection = [aDecoder decodeIntegerForKey:@"stackDirection"];
     _anchorPoint = (CGFloat)[aDecoder decodeDoubleForKey:@"anchorPoint"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _stackPosition = [aDecoder decodeCGPointForKey:@"stackPosition"];
 #else
     _stackPosition = [aDecoder decodePointForKey:@"stackPosition"];
@@ -85,7 +85,7 @@ const CGFloat HLStackLayoutManagerEpsilon = 0.001f;
 {
   [aCoder encodeInteger:_stackDirection forKey:@"stackDirection"];
   [aCoder encodeDouble:_anchorPoint forKey:@"anchorPoint"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_stackPosition forKey:@"stackPosition"];
 #else
   [aCoder encodePoint:_stackPosition forKey:@"stackPosition"];

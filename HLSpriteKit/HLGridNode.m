@@ -101,7 +101,7 @@ enum {
     _gridWidth = [aDecoder decodeIntForKey:@"gridWidth"];
     _squareCount = [aDecoder decodeIntForKey:@"squareCount"];
     _layoutMode = [aDecoder decodeIntegerForKey:@"layoutMode"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _squareSize = [aDecoder decodeCGSizeForKey:@"squareSize"];
 #else
     _squareSize = [aDecoder decodeSizeForKey:@"squareSize"];
@@ -131,7 +131,7 @@ enum {
   [aCoder encodeInt:_gridWidth forKey:@"gridWidth"];
   [aCoder encodeInt:_squareCount forKey:@"squareCount"];
   [aCoder encodeInteger:_layoutMode forKey:@"layoutMode"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_squareSize forKey:@"squareSize"];
 #else
   [aCoder encodeSize:_squareSize forKey:@"squareSize"];
@@ -402,7 +402,7 @@ enum {
 
 - (NSArray *)addsToGestureRecognizers
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   return @[ [[UITapGestureRecognizer alloc] init] ];
 #else
   return @[ [[NSClickGestureRecognizer alloc] init] ];
@@ -412,7 +412,7 @@ enum {
 - (BOOL)addToGesture:(HLGestureRecognizer *)gestureRecognizer firstLocation:(CGPoint)sceneLocation isInside:(BOOL *)isInside
 {
   *isInside = YES;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
     // note: Require only one tap and one touch, same as our gesture recognizer returned
     // from addsToGestureRecognizers?  I think it's okay to be non-strict.
@@ -428,7 +428,7 @@ enum {
   return NO;
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 - (void)handleTap:(HLGestureRecognizer *)gestureRecognizer
 {
@@ -476,7 +476,7 @@ enum {
 
 #endif
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 #pragma mark -
 #pragma mark UIResponder

@@ -222,7 +222,7 @@ static BOOL _sceneAssetsLoaded = NO;
 
       [_sharedGestureRecognizers addObject:neededGestureRecognizer];
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
       UIView *view = self.view;
 #else
       NSView *view = self.view;
@@ -239,7 +239,7 @@ static BOOL _sceneAssetsLoaded = NO;
   _sharedGestureRecognizers = nil;
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 #else
 - (BOOL)gestureRecognizer:(NSGestureRecognizer *)gestureRecognizer shouldAttemptToRecognizeWithEvent:(nonnull NSEvent *)event
@@ -276,7 +276,7 @@ static BOOL _sceneAssetsLoaded = NO;
   //     in some cases.)
 
   [gestureRecognizer removeTarget:nil action:NULL];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   CGPoint sceneLocation = [touch locationInNode:self];
 #else
   // note: Assume the event must have a valid location, or else it wouldn't be the kind of

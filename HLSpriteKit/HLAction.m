@@ -8,7 +8,7 @@
 
 #import "HLAction.h"
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 #import <UIKit/UIKit.h>
 #endif
 
@@ -1313,7 +1313,7 @@ HLActionApplyTimingInverse(HLActionTimingMode timingMode, CGFloat normalTime)
   self = [super initWithCoder:aDecoder];
   if (self) {
     _isOriginSet = [aDecoder decodeBoolForKey:@"isOriginSet"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _origin = [aDecoder decodeCGPointForKey:@"origin"];
     _destination = [aDecoder decodeCGPointForKey:@"destination"];
 #else
@@ -1328,7 +1328,7 @@ HLActionApplyTimingInverse(HLActionTimingMode timingMode, CGFloat normalTime)
 {
   [super encodeWithCoder:aCoder];
   [aCoder encodeBool:_isOriginSet forKey:@"isOriginSet"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_origin forKey:@"origin"];
   [aCoder encodeCGPoint:_destination forKey:@"destination"];
 #else
@@ -3511,7 +3511,7 @@ HLActionApplyTimingInverse(HLActionTimingMode timingMode, CGFloat normalTime)
 {
   self = [super init];
   if (self) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _start = [aDecoder decodeCGPointForKey:@"start"];
     _finish = [aDecoder decodeCGPointForKey:@"finish"];
 #else
@@ -3524,7 +3524,7 @@ HLActionApplyTimingInverse(HLActionTimingMode timingMode, CGFloat normalTime)
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_start forKey:@"start"];
   [aCoder encodeCGPoint:_finish forKey:@"finish"];
 #else

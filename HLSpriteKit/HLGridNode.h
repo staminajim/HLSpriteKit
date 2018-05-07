@@ -114,7 +114,7 @@ typedef NS_ENUM(NSInteger, HLGridNodeLayoutMode) {
 
 /// @name Managing Interaction
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 /**
  A callback invoked when a square in the grid is tapped.
@@ -401,7 +401,7 @@ typedef NS_ENUM(NSInteger, HLGridNodeLayoutMode) {
 
 /// @name Handling User Interaction
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 /**
  Called when the user taps a square in the grid.

@@ -67,7 +67,7 @@
 {
   self = [super init];
   if (self) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _anchorPoint = [aDecoder decodeCGPointForKey:@"anchorPoint"];
     _gridPosition = [aDecoder decodeCGPointForKey:@"gridPosition"];
 #else
@@ -76,7 +76,7 @@
 #endif
     _columnCount = (NSUInteger)[aDecoder decodeIntegerForKey:@"columnCount"];
     _rowCount = (NSUInteger)[aDecoder decodeIntegerForKey:@"rowCount"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _squareSize = [aDecoder decodeCGSizeForKey:@"squareSize"];
     _squareAnchorPoint = [aDecoder decodeCGPointForKey:@"squareAnchorPoint"];
 #else
@@ -86,7 +86,7 @@
     _fillMode = [aDecoder decodeIntegerForKey:@"fillMode"];
     _gridBorder = (CGFloat)[aDecoder decodeDoubleForKey:@"gridBorder"];
     _squareSeparator = (CGFloat)[aDecoder decodeDoubleForKey:@"squareSeparator"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _size = [aDecoder decodeCGSizeForKey:@"size"];
 #else
     _size = [aDecoder decodeSizeForKey:@"size"];
@@ -97,7 +97,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_anchorPoint forKey:@"anchorPoint"];
   [aCoder encodeCGPoint:_gridPosition forKey:@"gridPosition"];
 #else
@@ -106,7 +106,7 @@
 #endif
   [aCoder encodeInteger:(NSInteger)_columnCount forKey:@"columnCount"];
   [aCoder encodeInteger:(NSInteger)_rowCount forKey:@"rowCount"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_squareSize forKey:@"squareSize"];
   [aCoder encodeCGPoint:_squareAnchorPoint forKey:@"squareAnchorPoint"];
 #else
@@ -116,7 +116,7 @@
   [aCoder encodeInteger:_fillMode forKey:@"fillMode"];
   [aCoder encodeDouble:_gridBorder forKey:@"gridBorder"];
   [aCoder encodeDouble:_squareSeparator forKey:@"squareSeparator"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_size forKey:@"size"];
 #else
   [aCoder encodeSize:_size forKey:@"size"];

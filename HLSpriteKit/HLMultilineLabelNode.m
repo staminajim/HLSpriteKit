@@ -80,7 +80,7 @@
     _text = [aDecoder decodeObjectForKey:@"text"];
     _widthMaximum = (CGFloat)[aDecoder decodeDoubleForKey:@"widthMaximum"];
     _lineSpacing = (CGFloat)[aDecoder decodeDoubleForKey:@"lineSpacing"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _renderNode.anchorPoint = [aDecoder decodeCGPointForKey:@"anchorPoint"];
 #else
     _renderNode.anchorPoint = [aDecoder decodePointForKey:@"anchorPoint"];
@@ -105,7 +105,7 @@
   [aCoder encodeObject:_text forKey:@"text"];
   [aCoder encodeDouble:_widthMaximum forKey:@"widthMaximum"];
   [aCoder encodeDouble:_lineSpacing forKey:@"lineSpacing"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_renderNode.anchorPoint forKey:@"anchorPoint"];
 #else
   [aCoder encodePoint:_renderNode.anchorPoint forKey:@"anchorPoint"];
@@ -197,7 +197,7 @@
   paragraphStyle.alignment = _alignment;
 
   NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   attributes[NSFontAttributeName] = [UIFont fontWithName:_fontName size:_fontSize];
 #else
   attributes[NSFontAttributeName] = [NSFont fontWithName:_fontName size:_fontSize];
@@ -215,7 +215,7 @@
                                                      options:(NSStringDrawingUsesLineFragmentOrigin)
                                                      context:nil];
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
   // note: [Tested on iOS 8.4 and 9.3.] The bitmap graphics context will convert the input
   // size to pixels using the current device scaling and then rounding up to the nearest

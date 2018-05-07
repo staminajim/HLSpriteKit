@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, HLScrollNodeContentScaleMinimumMode)
                  contentSize:(CGSize)contentSize
           contentAnchorPoint:(CGPoint)contentAnchorPoint
                contentOffset:(CGPoint)contentOffset
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
                 contentInset:(UIEdgeInsets)contentInset
 #else
                 contentInset:(NSEdgeInsets)contentInset
@@ -206,7 +206,7 @@ typedef NS_ENUM(NSInteger, HLScrollNodeContentScaleMinimumMode)
 
  Default value `UIEdgeInsetsZero`.
 */
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 @property (nonatomic, assign) UIEdgeInsets contentInset;
 #else
 @property (nonatomic, assign) NSEdgeInsets contentInset;

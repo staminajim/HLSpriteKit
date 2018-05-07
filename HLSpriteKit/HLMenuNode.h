@@ -266,7 +266,7 @@ typedef NS_ENUM(NSInteger, HLMenuNodeAnimation) {
 
 /// @name Handling User Interaction
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 /**
  Called when the user taps on a menu item, but before the menu node has taken any

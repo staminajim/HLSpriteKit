@@ -27,9 +27,6 @@ HLGestureTarget_areEquivalentGestureRecognizers(HLGestureRecognizer *a, HLGestur
     if (tapA.numberOfTapsRequired != tapB.numberOfTapsRequired) {
       return NO;
     }
-    if (tapA.numberOfTouchesRequired != tapB.numberOfTouchesRequired) {
-      return NO;
-    }
     return YES;
   }
 
@@ -39,30 +36,10 @@ HLGestureTarget_areEquivalentGestureRecognizers(HLGestureRecognizer *a, HLGestur
     if (swipeA.direction != swipeB.direction) {
       return NO;
     }
-    if (swipeA.numberOfTouchesRequired != swipeB.numberOfTouchesRequired) {
-      return NO;
-    }
     return YES;
   }
 
   if (classA == [UIPanGestureRecognizer class]) {
-    UIPanGestureRecognizer *panA = (UIPanGestureRecognizer *)a;
-    UIPanGestureRecognizer *panB = (UIPanGestureRecognizer *)b;
-    if (panA.minimumNumberOfTouches != panB.minimumNumberOfTouches) {
-      return NO;
-    }
-    if (panA.maximumNumberOfTouches != panB.maximumNumberOfTouches) {
-      return NO;
-    }
-    return YES;
-  }
-
-  if (classA == [UIScreenEdgePanGestureRecognizer class]) {
-    UIScreenEdgePanGestureRecognizer *screenEdgePanA = (UIScreenEdgePanGestureRecognizer *)a;
-    UIScreenEdgePanGestureRecognizer *screenEdgePanB = (UIScreenEdgePanGestureRecognizer *)b;
-    if (screenEdgePanA.edges != screenEdgePanB.edges) {
-      return NO;
-    }
     return YES;
   }
 
@@ -70,9 +47,6 @@ HLGestureTarget_areEquivalentGestureRecognizers(HLGestureRecognizer *a, HLGestur
     UILongPressGestureRecognizer *longPressA = (UILongPressGestureRecognizer *)a;
     UILongPressGestureRecognizer *longPressB = (UILongPressGestureRecognizer *)b;
     if (longPressA.numberOfTapsRequired != longPressB.numberOfTapsRequired) {
-      return NO;
-    }
-    if (longPressA.numberOfTouchesRequired != longPressB.numberOfTouchesRequired) {
       return NO;
     }
     if (fabs(longPressA.minimumPressDuration - longPressB.minimumPressDuration) > HLGestureTargetLongPressMinimumPressDurationEpsilon) {
@@ -83,6 +57,71 @@ HLGestureTarget_areEquivalentGestureRecognizers(HLGestureRecognizer *a, HLGestur
     }
     return YES;
   }
+
+#elif TARGET_OS_TV
+
+    if (classA == [UITapGestureRecognizer class]) {
+        UITapGestureRecognizer *tapA = (UITapGestureRecognizer *)a;
+        UITapGestureRecognizer *tapB = (UITapGestureRecognizer *)b;
+        if (tapA.numberOfTapsRequired != tapB.numberOfTapsRequired) {
+            return NO;
+        }
+        if (tapA.numberOfTouchesRequired != tapB.numberOfTouchesRequired) {
+            return NO;
+        }
+        return YES;
+    }
+
+    if (classA == [UISwipeGestureRecognizer class]) {
+        UISwipeGestureRecognizer *swipeA = (UISwipeGestureRecognizer *)a;
+        UISwipeGestureRecognizer *swipeB = (UISwipeGestureRecognizer *)b;
+        if (swipeA.direction != swipeB.direction) {
+            return NO;
+        }
+        if (swipeA.numberOfTouchesRequired != swipeB.numberOfTouchesRequired) {
+            return NO;
+        }
+        return YES;
+    }
+
+    if (classA == [UIPanGestureRecognizer class]) {
+        UIPanGestureRecognizer *panA = (UIPanGestureRecognizer *)a;
+        UIPanGestureRecognizer *panB = (UIPanGestureRecognizer *)b;
+        if (panA.minimumNumberOfTouches != panB.minimumNumberOfTouches) {
+            return NO;
+        }
+        if (panA.maximumNumberOfTouches != panB.maximumNumberOfTouches) {
+            return NO;
+        }
+        return YES;
+    }
+
+    if (classA == [UIScreenEdgePanGestureRecognizer class]) {
+        UIScreenEdgePanGestureRecognizer *screenEdgePanA = (UIScreenEdgePanGestureRecognizer *)a;
+        UIScreenEdgePanGestureRecognizer *screenEdgePanB = (UIScreenEdgePanGestureRecognizer *)b;
+        if (screenEdgePanA.edges != screenEdgePanB.edges) {
+            return NO;
+        }
+        return YES;
+    }
+
+    if (classA == [UILongPressGestureRecognizer class]) {
+        UILongPressGestureRecognizer *longPressA = (UILongPressGestureRecognizer *)a;
+        UILongPressGestureRecognizer *longPressB = (UILongPressGestureRecognizer *)b;
+        if (longPressA.numberOfTapsRequired != longPressB.numberOfTapsRequired) {
+            return NO;
+        }
+        if (longPressA.numberOfTouchesRequired != longPressB.numberOfTouchesRequired) {
+            return NO;
+        }
+        if (fabs(longPressA.minimumPressDuration - longPressB.minimumPressDuration) > HLGestureTargetLongPressMinimumPressDurationEpsilon) {
+            return NO;
+        }
+        if (fabs(longPressA.allowableMovement - longPressB.allowableMovement) > HLGestureTargetLongPressAllowableMovementEpsilon) {
+            return NO;
+        }
+        return YES;
+    }
 
 #else
 
@@ -112,7 +151,7 @@ HLGestureTarget_areEquivalentGestureRecognizers(HLGestureRecognizer *a, HLGestur
   return YES;
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 @implementation HLTapGestureTarget
 

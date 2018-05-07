@@ -53,7 +53,7 @@ const CGFloat HLTableLayoutManagerEpsilon = 0.001f;
 {
   self = [super init];
   if (self) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _anchorPoint = [aDecoder decodeCGPointForKey:@"anchorPoint"];
     _tablePosition = [aDecoder decodeCGPointForKey:@"tablePosition"];
 #else
@@ -62,7 +62,7 @@ const CGFloat HLTableLayoutManagerEpsilon = 0.001f;
 #endif
     _columnCount = (NSUInteger)[aDecoder decodeIntegerForKey:@"columnCount"];
     _rowCount = (NSUInteger)[aDecoder decodeIntegerForKey:@"rowCount"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _constrainedSize = [aDecoder decodeCGSizeForKey:@"constrainedSize"];
 #else
     _constrainedSize = [aDecoder decodeSizeForKey:@"constrainedSize"];
@@ -74,7 +74,7 @@ const CGFloat HLTableLayoutManagerEpsilon = 0.001f;
     _tableBorder = (CGFloat)[aDecoder decodeDoubleForKey:@"tableBorder"];
     _columnSeparator = (CGFloat)[aDecoder decodeDoubleForKey:@"columnSeparator"];
     _rowSeparator = (CGFloat)[aDecoder decodeDoubleForKey:@"rowSeparator"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _size = [aDecoder decodeCGSizeForKey:@"size"];
 #else
     _size = [aDecoder decodeSizeForKey:@"size"];
@@ -85,7 +85,7 @@ const CGFloat HLTableLayoutManagerEpsilon = 0.001f;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_anchorPoint forKey:@"anchorPoint"];
   [aCoder encodeCGPoint:_tablePosition forKey:@"tablePosition"];
 #else
@@ -96,7 +96,7 @@ const CGFloat HLTableLayoutManagerEpsilon = 0.001f;
   // noob: rowCount and size could be recalculated, but since they are
   // typically not recalculated after layout, it makes sense to me to encode them.
   [aCoder encodeInteger:(NSInteger)_rowCount forKey:@"rowCount"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_constrainedSize forKey:@"constrainedSize"];
 #else
   [aCoder encodeSize:_constrainedSize forKey:@"constrainedSize"];
@@ -108,7 +108,7 @@ const CGFloat HLTableLayoutManagerEpsilon = 0.001f;
   [aCoder encodeDouble:_tableBorder forKey:@"tableBorder"];
   [aCoder encodeDouble:_columnSeparator forKey:@"columnSeparator"];
   [aCoder encodeDouble:_rowSeparator forKey:@"rowSeparator"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_size forKey:@"size"];
 #else
   [aCoder encodeSize:_size forKey:@"size"];
@@ -312,7 +312,7 @@ const CGFloat HLTableLayoutManagerEpsilon = 0.001f;
 
       if (column < columnAnchorPointsCount) {
         NSValue *anchorPointValue = _columnAnchorPoints[column];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
         cellAnchorPoint = [anchorPointValue CGPointValue];
 #else
         cellAnchorPoint = [anchorPointValue pointValue];

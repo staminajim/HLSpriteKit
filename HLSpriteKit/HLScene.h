@@ -128,7 +128,7 @@ FOUNDATION_EXPORT NSString * const HLSceneChildResizeWithScene;
    `super` in order to allow the shared gesture recognition system to find targets and
    forward gestures.
 */
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 @interface HLScene : SKScene <NSCoding, UIGestureRecognizerDelegate>
 #else
 @interface HLScene : SKScene <NSCoding, NSGestureRecognizerDelegate>

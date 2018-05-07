@@ -44,7 +44,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   SKNode *_buttonsNode;
   HLMenu *_currentMenu;
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   NSTimeInterval _touchesBeganTimestamp;
 #else
   NSTimeInterval _mouseDownTimestamp;
@@ -83,7 +83,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
     _topMenu = [aDecoder decodeObjectForKey:@"topMenu"];
     _currentMenu = [aDecoder decodeObjectForKey:@"currentMenu"];
     _itemSeparatorSize = (CGFloat)[aDecoder decodeDoubleForKey:@"itemSeparatorSize"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _size = [aDecoder decodeCGSizeForKey:@"size"];
     _anchorPoint = [aDecoder decodeCGPointForKey:@"anchorPoint"];
 #else
@@ -116,7 +116,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   [aCoder encodeObject:_topMenu forKey:@"topMenu"];
   [aCoder encodeObject:_currentMenu forKey:@"currentMenu"];
   [aCoder encodeDouble:_itemSeparatorSize forKey:@"itemSeparatorSize"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_size forKey:@"size"];
   [aCoder encodeCGPoint:_anchorPoint forKey:@"anchorPoint"];
 #else
@@ -210,7 +210,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
 
 - (NSArray *)addsToGestureRecognizers
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   return @[ [[UITapGestureRecognizer alloc] init],
             [[UILongPressGestureRecognizer alloc] init] ];
 #else
@@ -227,7 +227,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   for (SKNode *buttonNode in _buttonsNode.children) {
     if ([buttonNode containsPoint:location]) {
       *isInside = YES;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
       if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
         // note: Require only one tap and one touch, same as our gesture recognizer
         // returned from addsToGestureRecognizers?  I think it's okay to be non-strict.
@@ -254,7 +254,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   return NO;
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 - (void)handleTap:(HLGestureRecognizer *)gestureRecognizer
 #else
 - (void)handleClick:(HLGestureRecognizer *)gestureRecognizer
@@ -278,7 +278,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
 
 - (void)handleLongPress:(HLGestureRecognizer *)gestureRecognizer
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
     return;
   }
@@ -302,7 +302,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   }
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 #pragma mark -
 #pragma mark UIResponder
@@ -535,7 +535,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
 
   id <HLMenuNodeDelegate> delegate = self.delegate;
   if (delegate) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     if ([delegate respondsToSelector:@selector(menuNode:shouldTapMenuItem:itemIndex:)]
         && ![delegate menuNode:self shouldTapMenuItem:item itemIndex:itemIndex]) {
       return;
@@ -560,7 +560,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
   }
 
   if (delegate) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     if ([delegate respondsToSelector:@selector(menuNode:didTapMenuItem:itemIndex:)]) {
       [delegate menuNode:self didTapMenuItem:item itemIndex:itemIndex];
     }
@@ -578,7 +578,7 @@ HLMenuNodeValidateButtonPrototype(SKNode *buttonPrototype, NSString *label)
 
   id <HLMenuNodeDelegate> delegate = self.delegate;
   if (delegate) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     if ([delegate respondsToSelector:@selector(menuNode:didLongPressMenuItem:itemIndex:)]) {
       [delegate menuNode:self didLongPressMenuItem:item itemIndex:itemIndex];
     }

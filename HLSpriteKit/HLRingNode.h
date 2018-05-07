@@ -76,7 +76,7 @@
 
 /// @name Managing Interaction
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 /**
  A callback invoked when an item is tapped.
@@ -358,7 +358,7 @@
 
 /// @name Handling User Interaction
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 /**
  Called when the user taps an item in the ring.

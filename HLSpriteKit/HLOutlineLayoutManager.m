@@ -76,7 +76,7 @@ const CGFloat HLOutlineLayoutManagerEpsilon = 0.001f;
   self = [super init];
   if (self) {
     _anchorPointY = (CGFloat)[aDecoder decodeDoubleForKey:@"anchorPointY"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _outlinePosition = [aDecoder decodeCGPointForKey:@"outlinePosition"];
 #else
     _outlinePosition = [aDecoder decodePointForKey:@"outlinePosition"];
@@ -96,7 +96,7 @@ const CGFloat HLOutlineLayoutManagerEpsilon = 0.001f;
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
   [aCoder encodeDouble:_anchorPointY forKey:@"anchorPointY"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_outlinePosition forKey:@"outlinePosition"];
 #else
   [aCoder encodePoint:_outlinePosition forKey:@"outlinePosition"];

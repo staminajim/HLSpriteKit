@@ -35,7 +35,7 @@
     return 0.0f;
   }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   UIFont *font = [UIFont fontWithName:fontName size:fontSize];
 #else
   NSFont *font = [NSFont fontWithName:fontName size:fontSize];
@@ -90,7 +90,7 @@
     return 0.0f;
   }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   UIFont *font = [UIFont fontWithName:fontName size:fontSize];
 #else
   NSFont *font = [NSFont fontWithName:fontName size:fontSize];
@@ -146,7 +146,7 @@
     return;
   }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   UIFont *font = [UIFont fontWithName:self.fontName size:self.fontSize];
 #else
   NSFont *font = [NSFont fontWithName:self.fontName size:self.fontSize];

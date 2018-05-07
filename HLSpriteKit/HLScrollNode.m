@@ -24,7 +24,7 @@ enum {
   CGPoint _zoomPinNodeLocation;
   CGFloat _zoomOriginalContentScale;
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   CGFloat _touchesOriginalNodeDistance;
 #endif
 }
@@ -43,7 +43,7 @@ enum {
     _contentSize = contentSize;
     _contentAnchorPoint = CGPointMake(0.5f, 0.5f);
     _contentOffsetOffline = CGPointZero;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _contentInset = UIEdgeInsetsZero;
 #else
     _contentInset = NSEdgeInsetsZero;
@@ -63,7 +63,7 @@ enum {
                  contentSize:(CGSize)contentSize
                  contentAnchorPoint:(CGPoint)contentAnchorPoint
                contentOffset:(CGPoint)contentOffset
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
                 contentInset:(UIEdgeInsets)contentInset
 #else
                 contentInset:(NSEdgeInsets)contentInset
@@ -98,7 +98,7 @@ enum {
   if (self) {
 
     _contentNode = [aDecoder decodeObjectForKey:@"contentNode"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _size = [aDecoder decodeCGSizeForKey:@"size"];
     _anchorPoint = [aDecoder decodeCGPointForKey:@"anchorPoint"];
     _contentSize = [aDecoder decodeCGSizeForKey:@"contentSize"];
@@ -119,7 +119,7 @@ enum {
     _contentScaleMaximum = (CGFloat)[aDecoder decodeDoubleForKey:@"contentScaleMaximum"];
     _contentClipped = [aDecoder decodeBoolForKey:@"contentClipped"];
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _contentOffsetOffline = [aDecoder decodeCGPointForKey:@"contentOffsetOffline"];
 #else
     _contentOffsetOffline = [aDecoder decodePointForKey:@"contentOffsetOffline"];
@@ -134,7 +134,7 @@ enum {
   [super encodeWithCoder:aCoder];
 
   [aCoder encodeObject:_contentNode forKey:@"contentNode"];
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGSize:_size forKey:@"size"];
   [aCoder encodeCGPoint:_anchorPoint forKey:@"anchorPoint"];
   [aCoder encodeCGSize:_contentSize forKey:@"contentSize"];
@@ -155,7 +155,7 @@ enum {
   [aCoder encodeDouble:_contentScaleMaximum forKey:@"contentScaleMaximum"];
   [aCoder encodeBool:_contentClipped forKey:@"contentClipped"];
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_contentOffsetOffline forKey:@"contentOffsetOffline"];
 #else
   [aCoder encodePoint:_contentOffsetOffline forKey:@"contentOffsetOffline"];
@@ -339,7 +339,7 @@ enum {
   return [SKAction moveTo:constrainedPosition duration:duration];
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 - (void)setContentInset:(UIEdgeInsets)contentInset
 #else
 - (void)setContentInset:(NSEdgeInsets)contentInset
@@ -690,9 +690,11 @@ enum {
 
 - (NSArray *)addsToGestureRecognizers
 {
-#if TARGET_OS_IPHONE
+#if  TARGET_OS_IOS
   return @[ [[UIPanGestureRecognizer alloc] init],
             [[UIPinchGestureRecognizer alloc] init] ];
+#elif TARGET_OS_TV
+    return @[ [[UIPanGestureRecognizer alloc] init]];
 #else
   return @[ [[NSPanGestureRecognizer alloc] init],
             [[NSMagnificationGestureRecognizer alloc] init] ];
@@ -714,7 +716,7 @@ enum {
     return NO;
   }
 
-#if TARGET_OS_IPHONE
+#if  TARGET_OS_IOS
   if (HLGestureTarget_areEquivalentGestureRecognizers(gestureRecognizer, [[UIPanGestureRecognizer alloc] init])) {
     [gestureRecognizer addTarget:self action:@selector(handlePan:)];
     *isInside = YES;
@@ -725,6 +727,13 @@ enum {
     *isInside = YES;
     return YES;
   }
+#elif TARGET_OS_TV
+    if (HLGestureTarget_areEquivalentGestureRecognizers(gestureRecognizer, [[UIPanGestureRecognizer alloc] init])) {
+        [gestureRecognizer addTarget:self action:@selector(handlePan:)];
+        *isInside = YES;
+        [self HL_scrollStart:locationInSelf];
+        return YES;
+    }
 #else
   if (HLGestureTarget_areEquivalentGestureRecognizers(gestureRecognizer, [[NSPanGestureRecognizer alloc] init])) {
     [gestureRecognizer addTarget:self action:@selector(handlePan:)];
@@ -749,7 +758,7 @@ enum {
     return;
   }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   if (gestureRecognizer.state == UIGestureRecognizerStateEnded
       || gestureRecognizer.state == UIGestureRecognizerStateCancelled) {
     return;
@@ -780,7 +789,7 @@ enum {
     return;
   }
 
-#if TARGET_OS_IPHONE
+#if  TARGET_OS_IOS
 
   if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
     CGPoint viewLocation = [gestureRecognizer locationInView:self.scene.view];
@@ -792,6 +801,15 @@ enum {
     [self HL_zoomUpdate:scale];
   }
 
+#elif TARGET_OS_TV
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint viewLocation = [gestureRecognizer locationInView:self.scene.view];
+        CGPoint sceneLocation = [self.scene convertPointFromView:viewLocation];
+        CGPoint nodeLocation = [self convertPoint:sceneLocation fromNode:self.scene];
+        [self HL_zoomStart:nodeLocation];
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        [self HL_zoomUpdate:1.0];
+    }
 #else
 
   if (gestureRecognizer.state == NSGestureRecognizerStateBegan) {
@@ -807,7 +825,7 @@ enum {
 #endif
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 #pragma mark -
 #pragma mark UIResponder

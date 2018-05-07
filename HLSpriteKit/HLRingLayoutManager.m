@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, HLRingLayoutManagerThetasMode) {
 {
   self = [super init];
   if (self) {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     _ringPosition = [aDecoder decodeCGPointForKey:@"ringPosition"];
 #else
     _ringPosition = [aDecoder decodePointForKey:@"ringPosition"];
@@ -75,7 +75,7 @@ typedef NS_ENUM(NSInteger, HLRingLayoutManagerThetasMode) {
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
   [aCoder encodeCGPoint:_ringPosition forKey:@"ringPosition"];
 #else
   [aCoder encodePoint:_ringPosition forKey:@"ringPosition"];
